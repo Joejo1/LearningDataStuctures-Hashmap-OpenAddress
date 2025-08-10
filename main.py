@@ -3,7 +3,7 @@ import pandas as pd
 import csv
 
 emtyKey = '........'
-ar = np.array([[emtyKey]* 2] * 500000)
+ar = np.array([[emtyKey]* 2] * 20000)
 ln = len(ar)
 numOfCollision = 0
 
@@ -30,14 +30,15 @@ def isCollision(index, key):
 
 #--------------------MAIN
 
-js = np.array(pd.read_csv("baby-names.csv"))
+js = np.array(pd.read_csv("name.csv"))
 
 lengthOfCSV = len(js)
 print(lengthOfCSV)
 j = 0
 
 for i in js:
-    key = js[j][1]
+    key = js[j][0]
+    #value = js[j][3]
 
     index = getHash(key, ln)
 
@@ -50,10 +51,10 @@ for i in js:
         numOfCollision = numOfCollision + 1
 
     ar[index-collisionOffset][0] = key
+    #ar[index-collisionOffset][1] = value
     collisionOffset = 0
 
     j = j + 1
-
 
 
 
@@ -74,12 +75,14 @@ with open("output.csv","w+") as my_csv:
     csvWriter = csv.writer(my_csv,delimiter=',')
     csvWriter.writerows(ar)
 
-#----------Printing-----------
-print(full, emty)
+
+
+#-----------------Printing-----------
+print('Populated:', full, 'Empty:', emty)
 
 print('number of collisions: ', numOfCollision)
 
-print(js)
+#print(js)
 
-print(ar)
+#print(ar)
 
